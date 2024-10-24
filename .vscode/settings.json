@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "./MEF--MANAGE-ENTERPRISE-FILES-Desktop/repository"
+    ]
+}
