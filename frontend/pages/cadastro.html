@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - MEF</title>
+    <link rel="stylesheet" href="../styles/cadastroStyles.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="left">
+            <h1>CADASTRO</h1>
+            <p>Comece aqui!</p>
+            <form id="registrationForm">
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" placeholder="CNPJ" name="CNPJ" oninput="aplicarMascaraCNPJ(this)">
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" placeholder="Senha" name="password" oninput="validateForm()">
+                    <span id="passwordError" class="error-message"></span> <!-- Mensagem de erro específica -->
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="confirm_password" placeholder="Confirmar senha" name="confirm_password" oninput="validateForm()">
+                    <span id="confirmPasswordError" class="error-message"></span> <!-- Mensagem de erro específica -->
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="email" placeholder="Email" name="email" oninput="validateForm()">
+                    <span id="emailError" class="error-message"></span> <!-- Mensagem de erro específica -->
+                </div>
+                <button class="btn" type="submit">CRIAR</button>
+            </form>
+            <p class="terms">
+                Ao criar uma conta, você concorda com nossos
+                <a href="#">Termos de Uso</a> e
+                <a href="#">Políticas de Privacidade</a>
+            </p>
+        </div>
+        <div class="right">
+            <img src="../images/imagem-projeto-integrador.png" alt="MEF Logo">
+            <h2>Bem-vindo de volta!</h2>
+            <p>Já possui uma conta?</p>
+            <button onclick="window.location.href='../pages/index.html'">Entrar</button>
+        </div>
+    </div>
+
+    <script src="../scripts/aplicarMascaraCNPJ.js"></script>
+    <script src="../scripts/validacaoCadastro.js"></script>
+</body>
+
+</html>
