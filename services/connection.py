@@ -1,0 +1,5 @@
+import pyrebase 
+
+firebaseConfig = {
+   test
+}

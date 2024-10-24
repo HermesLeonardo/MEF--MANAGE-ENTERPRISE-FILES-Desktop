@@ -1,3 +1,5 @@
+/services/*
 /services
 /services/connection.py
-/services
+services/connection.py
+
