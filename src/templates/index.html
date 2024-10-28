@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - MEF</title>
+    
+    <!-- Estilos -->
+    <link rel="stylesheet" href="../static/styles/indexStyles.css">
+    
+    <!-- Pyscript -->
+    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+
+    <py-env>
+        - paths:
+    </py-env>
+</head>
+
+<body>
+    <div class="container">
+        <div class="left">
+            <img src="../static/images/imagem-projeto-integrador.png" alt="MEF Logo">
+            <h1>MEF</h1>
+            <p>Conecte-se com o seu escritório<br> A qualquer hora</p>
+        </div>
+        <div class="right">
+            <h2>LOGIN</h2>
+            <form>
+                <div class="input-group">
+                    <label for="CNPJ">CNPJ</label>
+                    <input type="text" id="CNPJ" name="CNPJ" placeholder="Digite o CNPJ da empresa"
+                        oninput="aplicarMascaraCNPJ(this)">
+                </div>
+                <div class="input-group">
+                    <label for="senha">Senha</label>
+                    <input type="password" id="senha" name="senha" placeholder="Digite sua senha">
+                </div>
+                <div class="forgot-password">
+                    <a href="#">Esqueceu sua senha?</a>
+                </div>
+                <button class="btn" type="submit">ENTRAR</button>
+            </form>
+            <div class="signup">
+                Ainda não possui uma conta? <a href="../templates/cadastro.html">Cadastre-se</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="../scripts/aplicarMascaraCNPJ.js"></script>
+</body>
+
+</html>
