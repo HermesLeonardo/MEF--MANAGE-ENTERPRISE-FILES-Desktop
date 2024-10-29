@@ -3,19 +3,6 @@ import firebase_admin
 from firebase_admin import credentials
 # from firebase_admin import firestore
 
-
-cred = firebaseConfig = {
-                        'apiKey': "AIzaSyBBcCTFtk892Y0KvaQoJtMdE33fhCFP-pU",
-                        'authDomain': "testeleo-593ef.firebaseapp.com",
-                        'databaseURL': "https://testeleo-593ef-default-rtdb.firebaseio.com",
-                        'projectId': "testeleo-593ef",
-                        'storageBucket': "testeleo-593ef.appspot.com",
-                        'messagingSenderId': "215227786514",
-                        'appId': "1:215227786514:web:e8f1eabba0c4f4e615bfcb"
-}
-firebase = pyrebase.initialize_app(cred)
-
-
 # Inicializando as credenciais e a aplicação Firebase
 def conexaofirebase():
     cred = credentials.Certificate('C:/UNIFIO-INTEGRADOR/pintregador/pi-6T/testeleo-593ef-firebase-adminsdk-hfnz1-bbcec932a2.json')
