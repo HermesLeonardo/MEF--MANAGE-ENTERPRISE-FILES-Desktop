@@ -1,4 +1,4 @@
-from cadastroDskRepository import CadastroDskRepository
+from repository.cadastroDskRepository import CadastroDskRepository
 
 
 class CadastroDskController:

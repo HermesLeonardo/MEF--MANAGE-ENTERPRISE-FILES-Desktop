@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, redirect, url_for
 import re
-from cadastroDskRepository import CadastroDskRepository
+from repository.cadastroDskRepository import CadastroDskRepository
 
 app = Flask(__name__)
 
