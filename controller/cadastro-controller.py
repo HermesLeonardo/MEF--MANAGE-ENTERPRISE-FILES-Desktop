@@ -21,3 +21,4 @@ class CadastroDskController:
     def delete_register(self, doc_id):
         # Chamando a função de exclusão no repository
         self.repository.delete(doc_id)
+

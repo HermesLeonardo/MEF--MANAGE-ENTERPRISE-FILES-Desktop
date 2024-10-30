@@ -1,45 +1,42 @@
-from flask import Flask, request, render_template, redirect, url_for
-import re
+from flask import Flask, request, redirect, url_for, render_template
 from repository.cadastroDskRepository import CadastroDskRepository
+from controller.cadastroDskController import CadastroDskController 
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/index.html')  # Rota para a página inicial
+
 def index():
-    return render_template('cadastro.html')
+    return render_template('cadastro.html') 
 
 @app.route('/cadastrar', methods=['POST'])
 def cadastrar():
-    cnpj = request.form['CNPJ']
+    print(request.form)  # Adicione isso para ver os dados recebidos
+
+    cnpj = request.form['CNPJ']  
     email = request.form['email']
     senha = request.form['password']
     confirmar_senha = request.form['confirm_password']
 
-    # Validação de senhas
+    # Validações simples
     if senha != confirmar_senha:
         return "As senhas não correspondem!", 400
 
-    # Validação de CNPJ (exemplo simples, você pode ajustar conforme necessário)
-    if not re.match(r'\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}', cnpj):
-        return "CNPJ inválido!", 400
+    controller = CadastroDskController()
+    
+    try:
+        doc_id = controller.create_register(cnpj, email, senha)
 
-    # Validação de e-mail
-    if not re.match(r'[^@]+@[^@]+\.[^@]+', email):
-        return "Email inválido!", 400
+        if doc_id:
+            return redirect(url_for('index'))  # Redireciona para a nova rota
 
-    data = {
-        'cnpj': cnpj,
-        'email': email,
-        'senha': senha
-    }
+        else:
+            return "Erro ao cadastrar", 500  # Retorna um erro genérico
+    except Exception as e:
+        return f"Erro ao cadastrar: {str(e)}", 500  # Retorna um erro genérico
+    
 
-    # Usar o Controller para processar a inserção
-    repository = CadastroDskRepository()
-    success, doc_id = repository.create(data)
 
-    if success:
-        return redirect(url_for('index'))
-    else:
-        return "Erro ao cadastrar", 500
+
 if __name__ == '__main__':
     app.run(debug=True)
