@@ -16,9 +16,9 @@ def cadastroAuth(email, password):
     )
     print("Cadastro com sucesso!".format(user.uid))
 
-cadastroAuth('leo@gmail.com', '654321')
+#cadastroAuth('leo@gmail.com', '654321')
 
-Auth = firebase.auth() 
+#Auth = firebase.auth() 
 
 def loginAuth():
     conexaofirebase()
@@ -32,9 +32,7 @@ def loginAuth():
          print("Erro")
     return
 
-#loginAuth()
-
-
+loginAuth()
 
 #API_KEY = credentials.Certificate('C:/UNIFIO-INTEGRADOR/pintregador/pi-6T/testeleo-593ef-firebase-adminsdk-hfnz1-bbcec932a2.json')
 
