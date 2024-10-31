@@ -1,120 +1,75 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página de Empresas</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="../static/styles/tela-inicial.css">
+    <title>Gerenciamento de Empresas</title>
+    <link rel="stylesheet" href="/src/static/styles/tela-inicial.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Font Awesome para ícones -->
 </head>
 <body>
-
-    <!-- Botão para abrir/fechar a barra lateral -->
-    <button class="toggle-btn" onclick="toggleSidebar()">
-        <i class="fas fa-bars"></i>
-    </button>
-
-    <!-- Barra lateral -->
-    <div class="sidebar" id="sidebar">
-        <h2>Escritório X</h2>
-        <button class="sidebar-button" onclick="irParaInicio()">Início</button>
-        <button class="sidebar-button" onclick="irParaNotificacoes()">Notificações</button>
-        <button class="sidebar-button" onclick="irParaPerfil()">Perfil</button>
-        <button class="sidebar-button" onclick="irParaConfiguracoes()">Configurações</button>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="user-info">
+            <img src="/src/static/images/imagem-projeto-integrador.png" alt="Usuário">
+            <h2>Usuário</h2>
+            <p>usuário@email.com</p>
+        </div>
+        <nav>
+            <ul>
+                <li onclick="irParaInicio()"><i class="fas fa-home"></i> Início</li>
+                <li onclick="irParaNotificacoes()"><i class="fas fa-bell"></i> Notificações</li>
+                <li onclick="irParaPerfil()"><i class="fas fa-user"></i> Perfil</li>
+                <li onclick="irParaConfiguracoes()"><i class="fas fa-cog"></i> Configurações</li>
+            </ul>
+        </nav>        
     </div>
 
-    <!-- Conteúdo principal -->
-    <div class="content">
-        <!-- Barra de pesquisa e botão de adicionar novo cliente -->
-        <div class="top-bar">
-            <input type="text" class="search-bar" placeholder="Pesquisar...">
-            <button class="add-client-btn">
-                <i class="fas fa-plus"></i> Adicionar Novo Cliente
-            </button>            
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">
+            <div class="search-container">
+                <input type="text" class="search-bar" placeholder="Pesquisar..." oninput="pesquisarEmpresas()">
+                <i class="fas fa-search search-icon"></i> <!-- Ícone de lupa -->
+            </div>
+            <button class="add-button" onclick="abrirPopupAdicionarEmpresa()">Adicionar Empresa</button>
         </div>
 
-        <!-- Área de Empresas -->
-        <div class="empresas-container" id="empresas-container">
-            <!-- Exemplo de empresas fixas -->
-            <div class="card">
-                <h3>Empresa 1</h3>
-                <p>13/09/2024</p>
-                <p>Funcionários: +80</p>
-            </div>
-            <div class="card">
-                <h3>Empresa 2</h3>
-                <p>13/09/2024</p>
-                <p>Funcionários: +52</p>
-            </div>
-            <div class="card">
-                <h3>Empresa 3</h3>
-                <p>13/09/2024</p>
-                <p>Funcionários: +12</p>
-            </div>
-        </div>
+        <h1>Empresas</h1>
+        <div id="empresas-container" class="empresas-container"></div>
 
-        <div class="empresas-container" id="empresas-container">
-            <!-- Exemplo de empresas fixas -->
-            <div class="card">
-                <h3>Empresa 4</h3>
-                <p>13/09/2024</p>
-                <p>Funcionários: +80</p>
-            </div>
-            <div class="card">
-                <h3>Empresa 5</h3>
-                <p>13/09/2024</p>
-                <p>Funcionários: +52</p>
-            </div>
-            <div class="card">
-                <h3>Empresa 6</h3>
-                <p>13/09/2024</p>
-                <p>Funcionários: +12</p>
-            </div>
-        </div>
-
-        <!-- Botões de navegação -->
+        <!-- Paginação -->
         <div class="pagination">
-            <button onclick="paginaAnterior()">&laquo; Anterior</button>
-            <button onclick="proximaPagina()">Próximo &raquo;</button>
+            <button onclick="paginaAnterior()">Anterior</button>
+            <button onclick="proximaPagina()">Próximo</button>
         </div>
 
-        <!-- Arquivos recentes -->
-        <div class="recent-files">
-            <h2>Arquivos Recentes</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Funcionários</th>
-                        <th>Tamanho</th>
-                        <th>Data</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Arquivo 1</td>
-                        <td>12</td>
-                        <td>2.8 MB</td>
-                        <td>13/09/2024</td>
-                    </tr>
-                    <tr>
-                        <td>Arquivo 2</td>
-                        <td>5</td>
-                        <td>242 MB</td>
-                        <td>13/09/2024</td>
-                    </tr>
-                    <tr>
-                        <td>Arquivo 3</td>
-                        <td>30</td>
-                        <td>1.8 GB</td>
-                        <td>13/09/2024</td>
-                    </tr>
-                </tbody>
-            </table>
+        <!-- Arquivos Recentes -->
+        <h2>Empresas Recentes</h2>
+        <div id="recent-files-container" class="recent-files-container"></div>
+    </div>
+
+    <!-- Popup para adicionar nova empresa -->
+    <div id="popupAdicionarEmpresa" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="fecharPopupAdicionarEmpresa()">&times;</span>
+            <h2>Adicionar Empresa</h2>
+            <input type="text" id="nomeEmpresa" placeholder="Nome da Empresa">
+            <input type="number" id="quantidadeFuncionarios" placeholder="Quantidade de Funcionários">
+            <button onclick="adicionarNovaEmpresa()">Salvar</button>
         </div>
     </div>
 
-    <!--Chamando Scripts-->
-    <script src="../static/scripts/scripts-Tela-Inicial.js"></script>
+    <!-- Popup para detalhes da empresa -->
+    <div id="popupDetalhes" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="fecharPopupDetalhes()">&times;</span>
+            <h2>Detalhes da Empresa</h2>
+            <div id="detalhesEmpresa"></div>
+            <button onclick="adicionarDocumento()">Adicionar Documento</button>
+        </div>
+    </div>
+
+    <script src="/src/static/scripts/scripts-Tela-Inicial.js"></script>
 </body>
 </html>

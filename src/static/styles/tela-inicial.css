@@ -1,140 +1,160 @@
-/* Estilos gerais */
-body {
-    font-family: Arial, sans-serif;
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
     display: flex;
+    min-height: 100vh;
+    background-color: #f4f5f7;
 }
 
-/* Estilos da barra lateral */
+/* Sidebar */
 .sidebar {
-    width: 250px;
-    height: 100vh;
-    background-color: #333;
+    background-color: #333; /* Alterado */
     color: #fff;
-    padding-top: 20px;
+    width: 200px; /* Alterado */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
     position: fixed;
-    left: 0;
-    top: 0;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
+    height: 100%;
+    border-radius: 0 20px 20px 0;
 }
 
-.sidebar.open {
-    transform: translateX(0);
+.sidebar .user-info {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.sidebar .user-info img {
+    width: 60px;
+    border-radius: 50%;
+    margin-bottom: 10px;
 }
 
 .sidebar h2 {
-    margin-left: 20px;
+    font-size: 18px;
+    margin-bottom: 5px;
 }
 
-.sidebar .sidebar-button {
-    display: block;
-    width: 100%;
-    padding: 15px 20px;
-    color: #fff;
-    text-align: left;
-    background: none;
-    border: none;
+.sidebar p {
+    font-size: 14px;
+    color: #ccc;
+}
+
+.sidebar nav ul {
+    list-style: none;
+}
+
+.sidebar nav ul li {
+    padding: 10px;
     cursor: pointer;
+    color: #fff;
+    transition: background 0.3s;
+    display: flex;
+    align-items: center;
     font-size: 16px;
-    transition: background-color 0.3s ease;
 }
 
-.sidebar .sidebar-button:hover {
+.sidebar nav ul li:hover {
     background-color: #444;
+    border-radius: 10px;
 }
 
-/* Botão de abrir/fechar a barra lateral */
-.toggle-btn {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    font-size: 20px;
-    background: none;
-    border: none;
-    color: #333;
-    cursor: pointer;
-    z-index: 1000;
-    transition: color 0.3s;
+/* Ícones na barra lateral */
+.sidebar nav ul li i {
+    margin-right: 10px;
+    font-size: 18px;
 }
 
-.sidebar.open + .toggle-btn {
-    color: #fff;
-}
-
-/* Estilos do conteúdo principal */
-.content {
-    margin-left: 270px;
+/* Main content */
+.main-content {
+    margin-left: 220px; /* Alterado */
     padding: 20px;
-    width: calc(100% - 270px);
+    width: calc(100% - 220px); /* Alterado */
 }
 
-/* Barra de pesquisa e botão de adicionar novo cliente */
-.top-bar {
+.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+}
+
+.search-container {
+    position: relative;
+    width: 70%;
 }
 
 .search-bar {
-    width: 50%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-/* Estilo do botão "Adicionar Novo Cliente" com ícone */
-.add-client-btn {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 20px;
-    font-size: 16px;
-    color: #fff;
-    background-color: #333;
-    border: none;
+    width: 100%;
+    padding: 10px 40px 10px 15px;
     border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    border: 1px solid #ddd;
 }
 
-.add-client-btn:hover {
+.search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #888;
+    pointer-events: none;
+}
+
+.add-button {
+    padding: 8px 15px;
+    background-color: #333;
+    color: #fff;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.add-button:hover {
     background-color: #555;
 }
 
-/* Estilos dos cartões das empresas (como botões) */
-.empresas-container {
-    display: flex;
-    justify-content: space-between;
+h1 {
+    font-size: 24px;
+    font-weight: 500;
     margin-bottom: 20px;
 }
 
+.empresas-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
 .card {
-    background-color: #f5f5f5;
-    border-radius: 8px;
     padding: 15px;
-    width: 30%;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    text-align: center;
+    transition: transform 0.2s;
 }
 
 .card:hover {
-    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
-    transform: translateY(-2px);
+    transform: scale(1.05);
 }
 
-.card:active {
-    transform: translateY(1px);
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+.card h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
 }
 
-/* Botões de navegação para paginação */
+.card p {
+    color: #888;
+    font-size: 14px;
+}
+
+/* Pagination */
 .pagination {
     display: flex;
     justify-content: center;
@@ -142,49 +162,125 @@ body {
 }
 
 .pagination button {
+    padding: 8px 15px;
+    margin: 0 5px;
     background-color: #333;
     color: #fff;
     border: none;
-    padding: 10px 20px;
-    margin: 0 10px;
-    cursor: pointer;
     border-radius: 5px;
+    cursor: pointer;
 }
 
-/* Estilos para a lista de arquivos recentes como botões */
-.recent-files {
-    margin-top: 60px;
+.pagination button:hover {
+    background-color: #555;
 }
 
-.recent-files table {
-    width: 100%;
-    border-collapse: collapse;
+/* Recent files */
+h2 {
+    font-size: 20px;
+    margin-top: 40px;
+    font-weight: 500;
 }
 
-.recent-files table, th, td {
-    padding: 8px;
+.recent-files-container {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+}
+
+.recent-file-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.recent-file-row span {
+    flex: 1;
     text-align: center;
+    font-size: 14px;
+    color: #666;
 }
 
-.recent-files tbody tr {
-    background-color: #f5f5f5;
+.recent-file-row span:first-child {
+    text-align: left;
+}
+
+.recent-file-row:hover {
+    background-color: #f9f9f9;
     border-radius: 5px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.recent-files tbody tr:hover {
-    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
-    transform: translateY(-2px);
+/* Popup */
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
 }
 
-.recent-files tbody tr:active {
-    transform: translateY(1px);
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+.popup-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    position: relative;
 }
 
-th {
+.popup-content h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.popup-content input {
+    width: 100%;
+    padding: 8px;
+    margin: 8px 0;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.popup-content button {
+    width: 100%;
+    padding: 10px;
     background-color: #333;
-    color: white;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+}
+
+.popup-content button:hover {
+    background-color: #555;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #333;
+}
+
+/* Estilos do container de detalhes */
+#detalhesEmpresa {
+    padding: 20px;
+    font-size: 14px;
+    color: #333;
+}
+
+#detalhesEmpresa p {
+    margin: 5px 0;
+}
+
+#detalhesEmpresa button {
+    margin-top: 15px;
 }
