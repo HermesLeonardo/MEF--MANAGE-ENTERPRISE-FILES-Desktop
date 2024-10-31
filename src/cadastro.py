@@ -29,7 +29,7 @@ def upload_file_to_storage(source_file_name, destination_blob_name):
         print(f"Erro ao enviar o arquivo: {str(e)}")
         return False
 
-@app.route('/')
+@app.route('/index')
 def index():
     return render_template('telaInicial.html')
 
