@@ -36,3 +36,11 @@ class CadastroDskController:
     def delete_register(self, doc_id):
         # Chamando a função de exclusão no repositório
         self.repository.delete(doc_id)
+
+    def delete_register(self, doc_id, password):
+        if password == "senha123":  # Senha padrão
+            # Chamando a função de exclusão no repositório
+            self.repository.delete(doc_id)
+        else:
+            print("Senha incorreta. Exclusão não autorizada.")
+
