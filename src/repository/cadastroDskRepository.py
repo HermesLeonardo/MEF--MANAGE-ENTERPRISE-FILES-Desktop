@@ -4,7 +4,7 @@ from firebase_admin import credentials, firestore, storage
 class CadastroDskRepository:
     def __init__(self):
         if not firebase_admin._apps:
-            cred = credentials.Certificate("L:/Drivers/testeleo-593ef-firebase-adminsdk-hfnz1-bbcec932a2.json")
+            cred = credentials.Certificate("C:/UNIFIO-INTEGRADOR/pintregador/pi-6T/testeleo-593ef-firebase-adminsdk-hfnz1-bbcec932a2.json")
             firebase_admin.initialize_app(cred, {
                 'storageBucket': 'testeleo-593ef.appspot.com'  # Insira o bucket do Firebase Storage
             })
@@ -65,3 +65,4 @@ class CadastroDskRepository:
             print(f"Subdiretório '{subdirectory_name}' excluído com sucesso em '{parent_directory}'")
         except Exception as e:
             print(f"Erro ao excluir subdiretório: {e}")
+

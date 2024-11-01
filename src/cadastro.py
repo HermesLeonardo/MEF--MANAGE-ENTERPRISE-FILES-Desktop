@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 # Inicialização do Firebase
 if not firebase_admin._apps:
-    cred = credentials.Certificate('L:/Drivers/testeleo-593ef-firebase-adminsdk-hfnz1-bbcec932a2.json')
+    cred = credentials.Certificate('C:/UNIFIO-INTEGRADOR/pintregador/pi-6T/testeleo-593ef-firebase-adminsdk-hfnz1-bbcec932a2.json')
     firebase_admin.initialize_app(cred, {
         'storageBucket': 'testeleo-593ef.appspot.com'
     })

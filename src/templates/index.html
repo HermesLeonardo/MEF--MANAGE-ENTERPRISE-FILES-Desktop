@@ -6,32 +6,40 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - MEF</title>
-    
+
     <!-- Estilos -->
-    <link rel="stylesheet" href="../static/styles/indexStyles.css">
-    
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/indexStyles.css') }}">
+
     <!-- Pyscript -->
     <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
     <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
 
-    <py-env>
-        - paths:
-    </py-env>
 </head>
 
 <body>
     <div class="container">
         <div class="left">
-            <img src="../static/images/imagem-projeto-integrador.png" alt="MEF Logo">
+            <img src="{{ url_for('static', filename='images/imagem-projeto-integrador.png') }}" alt="MEF Logo">
             <h1>MEF</h1>
             <p>Conecte-se com o seu escritório<br> A qualquer hora</p>
         </div>
         <div class="right">
             <h2>LOGIN</h2>
-            <form>
+
+            <!-- Exibe mensagem de erro
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div class="error-message">
+                {{ messages[0] }}
+            </div>
+            {% endif %}
+            {% endwith %} -->
+
+            <!-- Formulário de Login -->
+            <form method="POST" action="/login">
                 <div class="input-group">
                     <label for="CNPJ">CNPJ</label>
-                    <input type="text" id="CNPJ" name="CNPJ" placeholder="Digite o CNPJ da empresa"
+                    <input type="text" id="CNPJ" name="cnpj" placeholder="Digite o CNPJ da empresa"
                         oninput="aplicarMascaraCNPJ(this)">
                 </div>
                 <div class="input-group">
@@ -43,14 +51,15 @@
                 </div>
                 <button class="btn" type="submit">ENTRAR</button>
             </form>
+
             <div class="signup">
-                Ainda não possui uma conta? <a href="{{ url_for('cadastrar_form') }}">Cadastre-se</a>
+                Ainda não possui uma conta? <a href="{{ url_for('login') }}">Cadastre-se</a>
             </div>
         </div>
     </div>
-    
+
     <!-- Scripts -->
-    <script src="../scripts/aplicarMascaraCNPJ.js"></script>
+    <script src="{{ url_for('static', filename='scripts/aplicarMascaraCNPJ.js') }}"></script>
 </body>
 
 </html>
