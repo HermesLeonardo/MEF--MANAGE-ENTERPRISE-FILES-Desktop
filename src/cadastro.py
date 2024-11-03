@@ -1,6 +1,7 @@
-from flask import Flask, request, redirect, url_for, render_template, jsonify
+from flask import Flask, request, redirect, url_for, render_template, jsonify, flash
 from repository.cadastroDskRepository import CadastroDskRepository
 from controller.cadastroDskController import CadastroDskController
+from controller.loginDskController import loginDskController
 import os
 import firebase_admin
 from firebase_admin import credentials, firestore, storage
@@ -18,6 +19,33 @@ if not firebase_admin._apps:
 db = firestore.client()
 bucket = storage.bucket()
 
+login_controller = loginDskController()
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/telainicial')
+def tela_inicial():
+    return render_template('telainicial.html')
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        cnpj = request.form['cnpj']
+        senha = request.form['senha']
+
+        # Autentica o usuário com o controlador
+        result = login_controller.authenticate_user(cnpj, senha)
+
+        if isinstance(result, dict):  # Sucesso no login
+            return redirect(url_for('tela_inicial'))  # Redireciona para a página inicial
+        else:
+            flash(result)  # Exibe a mensagem de erro
+
+    return render_template('index.html')  # Exibe a página de login em caso de GET
+
 # Função para fazer upload de arquivo para o Firebase Storage
 def upload_file_to_storage(source_file_name, destination_blob_name):
     try:
@@ -28,10 +56,6 @@ def upload_file_to_storage(source_file_name, destination_blob_name):
     except Exception as e:
         print(f"Erro ao enviar o arquivo: {str(e)}")
         return False
-
-@app.route('/index')
-def index():
-    return render_template('telaInicial.html')
 
 @app.route('/cadastrar')
 def cadastrar_form():
@@ -53,7 +77,7 @@ def cadastrar():
         doc_id = controller.create_register(cnpj, email, senha)
 
         if doc_id:
-            return redirect(url_for('index'))
+            return redirect(url_for('tela_inicial'))
         else:
             return "Erro ao cadastrar", 500
     except Exception as e:
