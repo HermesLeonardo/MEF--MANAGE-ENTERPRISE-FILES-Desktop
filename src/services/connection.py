@@ -1,31 +1,25 @@
 import firebase_admin
-from firebase_admin import credentials, firestore
+from firebase_admin import credentials, firestore, storage
 
 # Inicializando as credenciais e a aplicação Firebase
 cred = credentials.Certificate('L:/Drivers/testeleo-593ef-firebase-adminsdk-hfnz1-bbcec932a2.json')
-firebase_admin.initialize_app(cred)
+firebase_admin.initialize_app(cred, {
+    'storageBucket': 'testeleo-593ef.appspot.com'  # Defina o nome do bucket do Storage
+})
 
 # Conectando ao Firestore
 db = firestore.client()
 
-# Dados de teste a serem adicionados ao Firestore
-data = {
-    'cnpj': '12.345.678/0001-95',
-    'email': 'exemplo@email.com',
-    'senha': 'minhaSenha'
-}
+# Conectando ao Storage
+bucket = storage.bucket()
 
-# Escrevendo no Firestore
-try:
-    doc_ref = db.collection('CadastroDsk').add(data)
-    print(f'Documento adicionado com ID: {doc_ref.id}')
-except Exception as e:
-    print(f'Erro ao adicionar documento: {e}')
-
-# Lendo do Firestore
-try:
-    docs = db.collection('CadastroDsk').stream()
-    for doc in docs:
-        print(f'{doc.id} => {doc.to_dict()}')
-except Exception as e:
-    print(f'Erro ao ler documentos: {e}')
+# Função para upload de arquivos ao Storage
+def upload_file_to_storage(file_path, destination_blob_name):
+    try:
+        blob = bucket.blob(destination_blob_name)
+        blob.upload_from_filename(file_path)
+        print(f'Arquivo {file_path} enviado para o Firebase Storage em {destination_blob_name}')
+        return True
+    except Exception as e:
+        print(f'Erro ao enviar arquivo: {e}')
+        return False
