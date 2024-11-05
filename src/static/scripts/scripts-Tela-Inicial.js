@@ -24,117 +24,204 @@ function fecharPopupAdicionarEmpresa() {
     document.getElementById("popupAdicionarEmpresa").style.display = "none";
 }
 
+// Funções de controle do popup de editar empresa
+function abrirPopupEditarEmpresa(empresa) {
+    document.getElementById("nomeEmpresaEditar").value = empresa.name || ""; // Evita 'undefined'
+    document.getElementById("quantidadeFuncionariosEditar").value = empresa.employees || ""; // Evita 'undefined'
+    document.getElementById("empresaIdEditar").value = empresa.id || ""; // Adiciona ID para edição
+    document.getElementById("popupEditarEmpresa").style.display = "flex";
+}
+
+function fecharPopupEditarEmpresa() {
+    document.getElementById("popupEditarEmpresa").style.display = "none";
+}
+
+// Funções de controle do popup de excluir empresa
+function abrirPopupExcluirEmpresa(empresa) {
+    document.getElementById("empresaNomeExcluir").innerText = empresa.name || "Nome não disponível"; // Evita 'undefined'
+    document.getElementById("empresaIdExcluir").value = empresa.id || ""; // Adiciona ID para exclusão
+    document.getElementById("popupExcluirEmpresa").style.display = "flex";
+}
+
+function fecharPopupExcluirEmpresa() {
+    document.getElementById("popupExcluirEmpresa").style.display = "none";
+}
+
+// Função de pesquisa
+function pesquisarEmpresas() {
+    const termoPesquisa = document.querySelector('.search-bar').value.toLowerCase();
+    const empresasFiltradas = todasEmpresas.filter(empresa => 
+        empresa.name.toLowerCase().includes(termoPesquisa)
+    );
+
+    empresas = empresasFiltradas;
+    atualizarInterfaceEmpresas();
+}
+
 // Array de empresas e empresas recentes
-let empresas = []; // array exibido atualmente
-let todasEmpresas = []; // array que mantém todas as empresas para restaurar após pesquisa
+let empresas = [];
+let todasEmpresas = [];
 let empresasRecentes = [];
 let offset = 0;
 const limit = 6;
 
 // Funções principais
-function carregarEmpresas() {
+async function carregarEmpresas() {
+    try {
+        const response = await fetch('/empresas', { method: 'GET' });
+        const data = await response.json();
+        todasEmpresas = data.empresas;
+        empresas = todasEmpresas.map((empresa) => ({
+            id: empresa.id,
+            name: empresa.name || "Nome não disponível",
+            employees: empresa.employees || 0,
+            tamanhoArquivos: 0, // Adicione lógica para recuperar o tamanho dos arquivos
+            ultimaAtualizacao: 'Nunca' // Adicione lógica para recuperar a data da última atualização
+        }));
+        atualizarInterfaceEmpresas();
+    } catch (error) {
+        console.error('Erro ao carregar empresas:', error);
+    }
+}
+
+function atualizarInterfaceEmpresas() {
     const empresasContainer = document.getElementById("empresas-container");
-    empresasContainer.innerHTML = ""; // Limpa o container antes de renderizar
+    empresasContainer.innerHTML = "";
     const empresasPaginadas = empresas.slice(offset, offset + limit);
-    
+
     empresasPaginadas.forEach((empresa) => {
         const card = document.createElement("div");
         card.className = "card";
         card.onclick = () => mostrarDetalhesEmpresa(empresa);
-        card.innerHTML = `<h3>${empresa.nome}</h3><p>Funcionários: ${empresa.funcionarios}</p>`;
+        card.innerHTML = `
+            <h3>${empresa.name || "Nome não disponível"}</h3>
+            <p>Funcionários: ${empresa.employees || 0}</p>
+            <button class="botao" onclick="abrirPopupExcluirEmpresa(empresa); event.stopPropagation();">Excluir</button>
+            <button class="botao" onclick="abrirPopupEditarEmpresa(empresa); event.stopPropagation();">Editar</button>
+        `;
         empresasContainer.appendChild(card);
     });
 }
 
-function pesquisarEmpresas() {
-    const query = document.querySelector(".search-bar").value.toLowerCase();
-
-    if (query) {
-        empresas = todasEmpresas.filter((empresa) => empresa.nome.toLowerCase().includes(query));
-    } else {
-        empresas = [...todasEmpresas]; // Restaura todas as empresas se o campo de busca estiver vazio
-    }
-
-    offset = 0;
-    carregarEmpresas();
-}
-
-function adicionarNovaEmpresa() {
+async function adicionarNovaEmpresa() {
     const nomeEmpresa = document.getElementById("nomeEmpresa").value;
     const quantidadeFuncionarios = document.getElementById("quantidadeFuncionarios").value;
-    
+
     if (nomeEmpresa && quantidadeFuncionarios) {
-        const novaEmpresa = { 
-            nome: nomeEmpresa, 
-            funcionarios: quantidadeFuncionarios,
-            tamanhoArquivos: 0, // Inicializa o tamanho dos arquivos em 0
-            ultimaAtualizacao: "Nunca"
+        const novaEmpresa = {
+            name: nomeEmpresa,
+            employees: quantidadeFuncionarios,
         };
-        
-        todasEmpresas.push(novaEmpresa); // Adiciona à lista completa de empresas
-        empresas.push(novaEmpresa); // Adiciona à lista atual exibida
-        adicionarEmpresaRecente(novaEmpresa); // Atualiza a lista de recentes
-        fecharPopupAdicionarEmpresa();
-        carregarEmpresas();
+
+        try {
+            const response = await fetch('/create-company', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(novaEmpresa),
+            });
+
+            if (response.ok) {
+                const empresaCriada = await response.json();
+                todasEmpresas.push(empresaCriada.empresa);
+                empresas.push(empresaCriada.empresa);
+                adicionarEmpresaRecente(empresaCriada.empresa);
+                fecharPopupAdicionarEmpresa();
+                atualizarInterfaceEmpresas();
+            } else {
+                alert('Erro ao cadastrar nova empresa');
+            }
+        } catch (error) {
+            console.error('Erro ao cadastrar empresa:', error);
+        }
+    } else {
+        alert('Por favor, preencha todos os campos.');
     }
 }
 
-// Função para simular o envio de arquivo
-function enviarArquivo(empresa) {
-    const tamanhoArquivo = Math.floor(Math.random() * 100) + 1; // Simula um tamanho de arquivo aleatório
-    empresa.tamanhoArquivos += tamanhoArquivo; // Atualiza o tamanho total dos arquivos
-    empresa.ultimaAtualizacao = new Date().toLocaleDateString("pt-BR"); // Atualiza a data de envio
+async function excluirEmpresa() {
+    const empresaId = document.getElementById("empresaIdExcluir").value;
 
-    alert(`Arquivo de ${tamanhoArquivo}MB enviado para ${empresa.nome}`);
-    atualizarEmpresasRecentes();
-    mostrarDetalhesEmpresa(empresa);
-}
+    try {
+        const response = await fetch('/delete-company', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id: empresaId, password: 'senha123' }),
+        });
 
-// Paginação
-function paginaAnterior() {
-    if (offset > 0) {
-        offset -= limit;
-        carregarEmpresas();
+        if (response.ok) {
+            empresas = empresas.filter((empresa) => empresa.id !== empresaId);
+            todasEmpresas = todasEmpresas.filter((empresa) => empresa.id !== empresaId);
+            fecharPopupExcluirEmpresa();
+            atualizarInterfaceEmpresas();
+        } else {
+            alert('Erro ao excluir empresa');
+        }
+    } catch (error) {
+        console.error('Erro ao excluir empresa:', error);
     }
 }
 
-function proximaPagina() {
-    if (offset + limit < empresas.length) {
-        offset += limit;
-        carregarEmpresas();
+async function editarEmpresa() {
+    const empresaId = document.getElementById("empresaIdEditar").value;
+    const nomeEmpresa = document.getElementById("nomeEmpresaEditar").value;
+    const quantidadeFuncionarios = document.getElementById("quantidadeFuncionariosEditar").value;
+
+    if (nomeEmpresa && quantidadeFuncionarios) {
+        try {
+            const response = await fetch('/edit-company', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id: empresaId, name: nomeEmpresa, employees: quantidadeFuncionarios }),
+            });
+
+            if (response.ok) {
+                const empresaAtualizada = await response.json();
+                const empresaIndex = empresas.findIndex((e) => e.id === empresaId);
+                empresas[empresaIndex] = empresaAtualizada.empresa;
+                fecharPopupEditarEmpresa();
+                atualizarInterfaceEmpresas();
+            } else {
+                alert('Erro ao editar empresa');
+            }
+        } catch (error) {
+            console.error('Erro ao editar empresa:', error);
+        }
+    } else {
+        alert('Por favor, preencha todos os campos.');
     }
 }
 
-// Funções para detalhes e empresas recentes
 function mostrarDetalhesEmpresa(empresa) {
     const detalhesContainer = document.getElementById("detalhesEmpresa");
     detalhesContainer.innerHTML = `
-        <p><strong>Nome:</strong> ${empresa.nome}</p>
-        <p><strong>Funcionários:</strong> ${empresa.funcionarios}</p>
-        <p><strong>Tamanho dos Arquivos:</strong> ${empresa.tamanhoArquivos} MB</p>
-        <p><strong>Última Atualização:</strong> ${empresa.ultimaAtualizacao}</p>
-        <button onclick="enviarArquivo(empresas.find(e => e.nome === '${empresa.nome}'))">Enviar Arquivo</button>
+        <p><strong>Nome:</strong> ${empresa.name || "Nome não disponível"}</p>
+        <p><strong>Funcionários:</strong> ${empresa.employees || 0}</p>
+        <p><strong>Tamanho dos Arquivos:</strong> ${empresa.tamanhoArquivos || 0} MB</p>
+        <p><strong>Última Atualização:</strong> ${empresa.ultimaAtualizacao || 'Nunca'}</p>
+        <button class="botao" onclick="abrirPopupExcluirEmpresa(empresa)">Excluir</button>
+        <button class="botao" onclick="abrirPopupEditarEmpresa(empresa)">Editar</button>
     `;
     document.getElementById("popupDetalhes").style.display = "flex";
 
-    adicionarEmpresaRecente(empresa); // Atualiza a lista de recentes ao visualizar os detalhes
+    adicionarEmpresaRecente(empresa);
 }
 
 function fecharPopupDetalhes() {
     document.getElementById("popupDetalhes").style.display = "none";
 }
 
-function adicionarDocumento() {
-    alert("Documento adicionado!");
-}
-
-// Função para adicionar uma empresa à lista de recentes
 function adicionarEmpresaRecente(empresa) {
     const empresaRecente = {
-        nome: empresa.nome,
-        funcionarios: empresa.funcionarios,
-        tamanhoArquivos: empresa.tamanhoArquivos,
-        ultimaAtualizacao: empresa.ultimaAtualizacao
+        name: empresa.name || "Nome não disponível",
+        employees: empresa.employees || 0,
+        tamanhoArquivos: empresa.tamanhoArquivos || 0,
+        ultimaAtualizacao: empresa.ultimaAtualizacao || 'Nunca'
     };
 
     empresasRecentes.unshift(empresaRecente);
@@ -144,22 +231,36 @@ function adicionarEmpresaRecente(empresa) {
     atualizarEmpresasRecentes();
 }
 
-// Função para atualizar a interface de empresas recentes
 function atualizarEmpresasRecentes() {
     const recentFilesContainer = document.getElementById("recent-files-container");
-    recentFilesContainer.innerHTML = ""; // Limpa o container antes de renderizar
-    
+    recentFilesContainer.innerHTML = "";
+
     empresasRecentes.forEach((empresa) => {
         const row = document.createElement("div");
         row.className = "recent-file-row";
         row.innerHTML = `
-            <span>${empresa.nome}</span>
-            <span>${empresa.funcionarios} funcionários</span>
+            <span>${empresa.name}</span>
+            <span>${empresa.employees} funcionários</span>
             <span>${empresa.tamanhoArquivos} MB</span>
             <span>${empresa.ultimaAtualizacao}</span>
         `;
         recentFilesContainer.appendChild(row);
     });
+}
+
+// Funções de navegação entre as páginas
+function proximo() {
+    if (offset + limit < empresas.length) {
+        offset += limit;
+        atualizarInterfaceEmpresas();
+    }
+}
+
+function anterior() {
+    if (offset > 0) {
+        offset -= limit;
+        atualizarInterfaceEmpresas();
+    }
 }
 
 // Inicializa as empresas exibidas e todas as empresas

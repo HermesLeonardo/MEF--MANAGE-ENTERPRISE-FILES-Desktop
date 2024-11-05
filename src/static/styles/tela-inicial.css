@@ -15,7 +15,7 @@ body {
 .sidebar {
     background-color: #333; /* Alterado */
     color: #fff;
-    width: 200px; /* Alterado */
+    width: 220px; /* Ajustado */
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -72,9 +72,9 @@ body {
 
 /* Main content */
 .main-content {
-    margin-left: 220px; /* Alterado */
+    margin-left: 240px; /* Ajustado */
     padding: 20px;
-    width: calc(100% - 220px); /* Alterado */
+    width: calc(100% - 240px); /* Ajustado */
 }
 
 .header {
@@ -87,35 +87,54 @@ body {
 .search-container {
     position: relative;
     width: 70%;
+    margin-bottom: 20px; /* Ajuste de espaçamento */
 }
 
 .search-bar {
     width: 100%;
-    padding: 10px 40px 10px 15px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
+    padding: 10px 15px; /* Removido padding adicional para ícone */
+    border-radius: 25px; /* Borda arredondada */
+    border: 1px solid #ccc; /* Cor da borda */
+    background-color: #fff; /* Cor de fundo */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombreamento */
+    font-size: 16px; /* Tamanho da fonte */
+    transition: all 0.3s ease-in-out; /* Transição suave */
+}
+
+.search-bar:focus {
+    border-color: #333; /* Cor da borda ao focar */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombreamento ao focar */
+    outline: none;
 }
 
 .search-icon {
     position: absolute;
-    right: 10px;
+    right: 15px; /* Ajuste de posição */
     top: 50%;
     transform: translateY(-50%);
-    font-size: 18px;
-    color: #888;
+    font-size: 20px; /* Tamanho do ícone */
+    color: #888; /* Cor do ícone */
+    transition: color 0.3s ease-in-out; /* Transição suave */
     pointer-events: none;
 }
 
-.add-button {
+.search-bar:focus + .search-icon {
+    color: #333; /* Cor do ícone ao focar */
+}
+
+.add-button, button {
     padding: 8px 15px;
     background-color: #333;
     color: #fff;
     border-radius: 8px;
     font-size: 14px;
     cursor: pointer;
+    border: none;
+    transition: background 0.3s;
+    margin: 10px; /* Adicionado */
 }
 
-.add-button:hover {
+.add-button:hover, button:hover {
     background-color: #555;
 }
 
@@ -163,12 +182,13 @@ h1 {
 
 .pagination button {
     padding: 8px 15px;
-    margin: 0 5px;
     background-color: #333;
     color: #fff;
-    border: none;
-    border-radius: 5px;
+    border-radius: 8px;
+    font-size: 14px;
     cursor: pointer;
+    border: none;
+    margin: 10px; /* Adicionado */
 }
 
 .pagination button:hover {
@@ -193,8 +213,16 @@ h2 {
 .recent-file-row {
     display: flex;
     justify-content: space-between;
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    transition: background 0.3s, transform 0.3s; /* Adicionado */
+}
+
+.recent-file-row:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.02); /* Adicionado */
 }
 
 .recent-file-row span {
@@ -208,29 +236,24 @@ h2 {
     text-align: left;
 }
 
-.recent-file-row:hover {
-    background-color: #f9f9f9;
-    border-radius: 5px;
-}
-
-/* Popup */
+/* Popups */
 .popup {
     display: none;
     position: fixed;
-    top: 0;
     left: 0;
+    top: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     justify-content: center;
     align-items: center;
 }
 
 .popup-content {
-    background: #fff;
+    background-color: #fff;
     padding: 20px;
     border-radius: 10px;
-    width: 300px;
+    width: 400px;
     position: relative;
 }
 
@@ -252,9 +275,11 @@ h2 {
     padding: 10px;
     background-color: #333;
     color: #fff;
-    border-radius: 5px;
+    border-radius: 8px;
+    font-size: 14px;
     cursor: pointer;
     border: none;
+    margin: 10px; /* Adicionado */
 }
 
 .popup-content button:hover {
@@ -263,11 +288,10 @@ h2 {
 
 .close {
     position: absolute;
-    top: 10px;
     right: 10px;
-    font-size: 20px;
+    top: 10px;
     cursor: pointer;
-    color: #333;
+    font-size: 20px;
 }
 
 /* Estilos do container de detalhes */
@@ -283,4 +307,5 @@ h2 {
 
 #detalhesEmpresa button {
     margin-top: 15px;
+    margin: 10px; /* Adicionado */
 }
