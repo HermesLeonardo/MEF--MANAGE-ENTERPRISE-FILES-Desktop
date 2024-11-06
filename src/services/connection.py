@@ -2,7 +2,7 @@ import firebase_admin
 from firebase_admin import credentials, firestore, storage
 
 # Inicializando as credenciais e a aplicação Firebase
-cred = credentials.Certificate('L:/Drivers/testeleo-593ef-firebase-adminsdk-hfnz1-bbcec932a2.json')
+cred = credentials.Certificate('D:/drive/testeleo-593ef-firebase-adminsdk-hfnz1-bbcec932a2.json')
 firebase_admin.initialize_app(cred, {
     'storageBucket': 'testeleo-593ef.appspot.com'  # Defina o nome do bucket do Storage
 })

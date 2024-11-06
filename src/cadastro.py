@@ -27,11 +27,16 @@ def index():
 
 @app.route('/telainicial')
 def tela_inicial():
-    return render_template('telainicial.html')
+    usuario = {
+        "nome": "Danilo",
+        "email": "danilo@gmail.com"
+    }
+    return render_template('tela-inicial.html', usuario=usuario)
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    
     if request.method == 'POST':
         cnpj = request.form['cnpj']
         senha = request.form['senha']
@@ -56,6 +61,10 @@ def upload_file_to_storage(source_file_name, destination_blob_name):
     except Exception as e:
         print(f"Erro ao enviar o arquivo: {str(e)}")
         return False
+    
+@app.route('/')
+def home():
+    return redirect(url_for('index'))
 
 @app.route('/cadastrar')
 def cadastrar_form():
@@ -82,7 +91,6 @@ def cadastrar():
             return "Erro ao cadastrar", 500
     except Exception as e:
         return f"Erro ao cadastrar: {str(e)}", 500
-
 @app.route('/upload', methods=['POST'])
 def upload():
     if 'file' not in request.files:
@@ -104,7 +112,6 @@ def upload():
         return "Arquivo enviado com sucesso!"
     else:
         return "Erro ao enviar o arquivo", 500
-
 @app.route('/create-company', methods=['POST'])
 def create_company():
     data = request.json
@@ -114,45 +121,47 @@ def create_company():
     print("Tentando criar diretório para empresa:", name)
 
     try:
+        # Cria o diretório no Firebase Storage com o nome da empresa
         blob = bucket.blob(f"{name}/")
         blob.upload_from_string('')  # Cria o diretório no Firebase Storage
 
+        # Aqui você pode adicionar lógica para salvar a empresa no Firestore se necessário
+
         print("Diretório criado com sucesso para a empresa:", name)
-        return jsonify(success=True)
+        return jsonify(success=True, empresa={"id": name, "name": name, "employees": employees})
     except Exception as e:
         print("Erro ao criar diretório:", str(e))
         return jsonify(success=False, error=str(e))
-
 @app.route('/empresas', methods=['GET'])
 def listar_empresas():
     try:
         blobs = bucket.list_blobs(prefix="")
-        empresas = {blob.name.split("/")[0] for blob in blobs if "/" in blob.name}
+        empresas = [{"id": blob.name.split("/")[0], "name": blob.name.split("/")[0]} for blob in blobs if "/" in blob.name]
 
-        return jsonify(empresas=list(empresas)), 200
+        return jsonify(empresas=empresas), 200
     except Exception as e:
         return jsonify(error=str(e)), 500
 
 @app.route('/delete-company', methods=['POST'])
 def delete_company():
     data = request.json
-    name = data.get('name')
+    company_id = data.get('id')  # Certifique-se de pegar o ID correto
     password = data.get('password')
 
     if password != 'senha123':
         return jsonify(success=False, error="Senha incorreta"), 403
 
     try:
-        blobs = bucket.list_blobs(prefix=f"{name}/")
+        # Excluir todos os blobs com prefixo do ID da empresa
+        blobs = bucket.list_blobs(prefix=f"{company_id}/")
         for blob in blobs:
             blob.delete()
 
-        print(f"Diretório '{name}' excluído com sucesso.")
+        print(f"Diretório '{company_id}' excluído com sucesso.")
         return jsonify(success=True)
     except Exception as e:
         print("Erro ao excluir diretório:", str(e))
         return jsonify(success=False, error=str(e))
-
 @app.route('/criar-subdiretorio', methods=['POST'])
 def criar_subdiretorio():
     data = request.get_json()
