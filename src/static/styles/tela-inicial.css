@@ -13,9 +13,9 @@ body {
 
 /* Sidebar */
 .sidebar {
-    background-color: #333; /* Alterado */
+    background-color: #333;
     color: #fff;
-    width: 220px; /* Ajustado */
+    width: 220px;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -72,9 +72,9 @@ body {
 
 /* Main content */
 .main-content {
-    margin-left: 240px; /* Ajustado */
+    margin-left: 240px;
     padding: 20px;
-    width: calc(100% - 240px); /* Ajustado */
+    width: calc(100% - 240px);
 }
 
 .header {
@@ -87,39 +87,39 @@ body {
 .search-container {
     position: relative;
     width: 70%;
-    margin-bottom: 20px; /* Ajuste de espaçamento */
+    margin-bottom: 20px;
 }
 
 .search-bar {
     width: 100%;
-    padding: 10px 15px; /* Removido padding adicional para ícone */
-    border-radius: 25px; /* Borda arredondada */
-    border: 1px solid #ccc; /* Cor da borda */
-    background-color: #fff; /* Cor de fundo */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombreamento */
-    font-size: 16px; /* Tamanho da fonte */
-    transition: all 0.3s ease-in-out; /* Transição suave */
+    padding: 10px 15px;
+    border-radius: 25px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    transition: all 0.3s ease-in-out;
 }
 
 .search-bar:focus {
-    border-color: #333; /* Cor da borda ao focar */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombreamento ao focar */
+    border-color: #333;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     outline: none;
 }
 
 .search-icon {
     position: absolute;
-    right: 15px; /* Ajuste de posição */
+    right: 15px;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 20px; /* Tamanho do ícone */
-    color: #888; /* Cor do ícone */
-    transition: color 0.3s ease-in-out; /* Transição suave */
+    font-size: 20px;
+    color: #888;
+    transition: color 0.3s ease-in-out;
     pointer-events: none;
 }
 
 .search-bar:focus + .search-icon {
-    color: #333; /* Cor do ícone ao focar */
+    color: #333;
 }
 
 .add-button, button {
@@ -131,7 +131,7 @@ body {
     cursor: pointer;
     border: none;
     transition: background 0.3s;
-    margin: 10px; /* Adicionado */
+    margin: 10px;
 }
 
 .add-button:hover, button:hover {
@@ -188,7 +188,7 @@ h1 {
     font-size: 14px;
     cursor: pointer;
     border: none;
-    margin: 10px; /* Adicionado */
+    margin: 10px;
 }
 
 .pagination button:hover {
@@ -217,12 +217,12 @@ h2 {
     border-bottom: 1px solid #eee;
     border-radius: 8px;
     margin-bottom: 10px;
-    transition: background 0.3s, transform 0.3s; /* Adicionado */
+    transition: background 0.3s, transform 0.3s;
 }
 
 .recent-file-row:hover {
     background-color: #f0f0f0;
-    transform: scale(1.02); /* Adicionado */
+    transform: scale(1.02);
 }
 
 .recent-file-row span {
@@ -279,33 +279,33 @@ h2 {
     font-size: 14px;
     cursor: pointer;
     border: none;
-    margin: 10px; /* Adicionado */
+    margin: 10px;
 }
 
 .popup-content button:hover {
-    background-color: #555;
-}
+    background-color: #555}
 
-.close {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    cursor: pointer;
-    font-size: 20px;
-}
-
-/* Estilos do container de detalhes */
-#detalhesEmpresa {
-    padding: 20px;
-    font-size: 14px;
-    color: #333;
-}
-
-#detalhesEmpresa p {
-    margin: 5px 0;
-}
-
-#detalhesEmpresa button {
-    margin-top: 15px;
-    margin: 10px; /* Adicionado */
-}
+    .close {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        cursor: pointer;
+        font-size: 20px;
+    }
+    
+    /* Estilos do container de detalhes */
+    #detalhesEmpresa {
+        padding: 20px;
+        font-size: 14px;
+        color: #333;
+    }
+    
+    #detalhesEmpresa p {
+        margin: 5px 0;
+    }
+    
+    #detalhesEmpresa button {
+        margin-top: 15px;
+        margin: 10px; /* Adicionado */
+    }
+    

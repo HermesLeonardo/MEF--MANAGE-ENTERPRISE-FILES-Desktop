@@ -27,7 +27,6 @@ function fecharPopupAdicionarEmpresa() {
 // Funções de controle do popup de editar empresa
 function abrirPopupEditarEmpresa(empresa) {
     document.getElementById("nomeEmpresaEditar").value = empresa.name || ""; // Evita 'undefined'
-    document.getElementById("quantidadeFuncionariosEditar").value = empresa.employees || ""; // Evita 'undefined'
     document.getElementById("empresaIdEditar").value = empresa.id || ""; // Adiciona ID para edição
     document.getElementById("popupEditarEmpresa").style.display = "flex";
 }
@@ -74,7 +73,6 @@ async function carregarEmpresas() {
         empresas = todasEmpresas.map((empresa) => ({
             id: empresa.id,
             name: empresa.name || "Nome não disponível",
-            employees: empresa.employees || 0,
             tamanhoArquivos: 0, // Adicione lógica para recuperar o tamanho dos arquivos
             ultimaAtualizacao: 'Nunca' // Adicione lógica para recuperar a data da última atualização
         }));
@@ -95,7 +93,6 @@ function atualizarInterfaceEmpresas() {
         card.onclick = () => mostrarDetalhesEmpresa(empresa);
         card.innerHTML = `
             <h3>${empresa.name || "Nome não disponível"}</h3>
-            <p>Funcionários: ${empresa.employees || 0}</p>
             <button class="botao" onclick="abrirPopupExcluirEmpresa(empresa); event.stopPropagation();">Excluir</button>
             <button class="botao" onclick="abrirPopupEditarEmpresa(empresa); event.stopPropagation();">Editar</button>
         `;
@@ -105,13 +102,9 @@ function atualizarInterfaceEmpresas() {
 
 async function adicionarNovaEmpresa() {
     const nomeEmpresa = document.getElementById("nomeEmpresa").value;
-    const quantidadeFuncionarios = document.getElementById("quantidadeFuncionarios").value;
 
-    if (nomeEmpresa && quantidadeFuncionarios) {
-        const novaEmpresa = {
-            name: nomeEmpresa,
-            employees: quantidadeFuncionarios,
-        };
+    if (nomeEmpresa) {
+        const novaEmpresa = { name: nomeEmpresa };
 
         try {
             const response = await fetch('/create-company', {
@@ -168,16 +161,15 @@ async function excluirEmpresa() {
 async function editarEmpresa() {
     const empresaId = document.getElementById("empresaIdEditar").value;
     const nomeEmpresa = document.getElementById("nomeEmpresaEditar").value;
-    const quantidadeFuncionarios = document.getElementById("quantidadeFuncionariosEditar").value;
 
-    if (nomeEmpresa && quantidadeFuncionarios) {
+    if (nomeEmpresa) {
         try {
             const response = await fetch('/edit-company', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ id: empresaId, name: nomeEmpresa, employees: quantidadeFuncionarios }),
+                body: JSON.stringify({ id: empresaId, name: nomeEmpresa }),
             });
 
             if (response.ok) {
@@ -201,7 +193,6 @@ function mostrarDetalhesEmpresa(empresa) {
     const detalhesContainer = document.getElementById("detalhesEmpresa");
     detalhesContainer.innerHTML = `
         <p><strong>Nome:</strong> ${empresa.name || "Nome não disponível"}</p>
-        <p><strong>Funcionários:</strong> ${empresa.employees || 0}</p>
         <p><strong>Tamanho dos Arquivos:</strong> ${empresa.tamanhoArquivos || 0} MB</p>
         <p><strong>Última Atualização:</strong> ${empresa.ultimaAtualizacao || 'Nunca'}</p>
         <button class="botao" onclick="abrirPopupExcluirEmpresa(empresa)">Excluir</button>
@@ -219,9 +210,8 @@ function fecharPopupDetalhes() {
 function adicionarEmpresaRecente(empresa) {
     const empresaRecente = {
         name: empresa.name || "Nome não disponível",
-        employees: empresa.employees || 0,
         tamanhoArquivos: empresa.tamanhoArquivos || 0,
-        ultimaAtualizacao: empresa.ultimaAtualizacao || 'Nunca'
+        ultimaAtualizacao: empresa.ultimaAtualizacao || 'Nunca',
     };
 
     empresasRecentes.unshift(empresaRecente);
@@ -240,7 +230,6 @@ function atualizarEmpresasRecentes() {
         row.className = "recent-file-row";
         row.innerHTML = `
             <span>${empresa.name}</span>
-            <span>${empresa.employees} funcionários</span>
             <span>${empresa.tamanhoArquivos} MB</span>
             <span>${empresa.ultimaAtualizacao}</span>
         `;
