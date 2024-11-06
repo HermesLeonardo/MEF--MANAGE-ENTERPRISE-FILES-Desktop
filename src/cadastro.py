@@ -33,7 +33,6 @@ def tela_inicial():
     }
     return render_template('tela-inicial.html', usuario=usuario)
 
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     
@@ -91,6 +90,7 @@ def cadastrar():
             return "Erro ao cadastrar", 500
     except Exception as e:
         return f"Erro ao cadastrar: {str(e)}", 500
+
 @app.route('/upload', methods=['POST'])
 def upload():
     if 'file' not in request.files:
@@ -112,11 +112,11 @@ def upload():
         return "Arquivo enviado com sucesso!"
     else:
         return "Erro ao enviar o arquivo", 500
+
 @app.route('/create-company', methods=['POST'])
 def create_company():
     data = request.json
     name = data.get('name')
-    employees = data.get('employees')
 
     print("Tentando criar diretório para empresa:", name)
 
@@ -125,27 +125,34 @@ def create_company():
         blob = bucket.blob(f"{name}/")
         blob.upload_from_string('')  # Cria o diretório no Firebase Storage
 
-        # Aqui você pode adicionar lógica para salvar a empresa no Firestore se necessário
-
         print("Diretório criado com sucesso para a empresa:", name)
-        return jsonify(success=True, empresa={"id": name, "name": name, "employees": employees})
+        return jsonify(success=True, empresa={"id": name, "name": name})
     except Exception as e:
         print("Erro ao criar diretório:", str(e))
         return jsonify(success=False, error=str(e))
+
 @app.route('/empresas', methods=['GET'])
 def listar_empresas():
     try:
         blobs = bucket.list_blobs(prefix="")
-        empresas = [{"id": blob.name.split("/")[0], "name": blob.name.split("/")[0]} for blob in blobs if "/" in blob.name]
+        empresas = {}
+        for blob in blobs:
+            parts = blob.name.split("/")
+            if len(parts) > 1 and parts[1] == '':  # Verifica se é um diretório principal
+                empresa_id = parts[0]
+                empresas[empresa_id] = {"id": empresa_id, "name": empresa_id}
+            elif len(parts) == 1 and parts[0] not in empresas:  # Inclui diretórios principais mesmo se contiver sub-pastas
+                empresa_id = parts[0]
+                empresas[empresa_id] = {"id": empresa_id, "name": empresa_id}
 
-        return jsonify(empresas=empresas), 200
+        return jsonify(empresas=list(empresas.values())), 200
     except Exception as e:
         return jsonify(error=str(e)), 500
 
 @app.route('/delete-company', methods=['POST'])
 def delete_company():
     data = request.json
-    company_id = data.get('id')  # Certifique-se de pegar o ID correto
+    company_id = data.get('id')
     password = data.get('password')
 
     if password != 'senha123':
@@ -162,6 +169,7 @@ def delete_company():
     except Exception as e:
         print("Erro ao excluir diretório:", str(e))
         return jsonify(success=False, error=str(e))
+
 @app.route('/criar-subdiretorio', methods=['POST'])
 def criar_subdiretorio():
     data = request.get_json()

@@ -14,10 +14,8 @@ body {
 /* Sidebar */
 .sidebar {
     background-color: #333;
-    /* Alterado */
     color: #fff;
     width: 220px;
-    /* Ajustado */
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -75,10 +73,8 @@ body {
 /* Main content */
 .main-content {
     margin-left: 240px;
-    /* Ajustado */
     padding: 20px;
     width: calc(100% - 240px);
-    /* Ajustado */
 }
 
 .header {
@@ -92,53 +88,38 @@ body {
     position: relative;
     width: 70%;
     margin-bottom: 20px;
-    /* Ajuste de espaçamento */
 }
 
 .search-bar {
     width: 100%;
     padding: 10px 15px;
-    /* Removido padding adicional para ícone */
     border-radius: 25px;
-    /* Borda arredondada */
     border: 1px solid #ccc;
-    /* Cor da borda */
     background-color: #fff;
-    /* Cor de fundo */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    /* Sombreamento */
     font-size: 16px;
-    /* Tamanho da fonte */
     transition: all 0.3s ease-in-out;
-    /* Transição suave */
 }
 
 .search-bar:focus {
     border-color: #333;
-    /* Cor da borda ao focar */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    /* Sombreamento ao focar */
     outline: none;
 }
 
 .search-icon {
     position: absolute;
     right: 15px;
-    /* Ajuste de posição */
     top: 50%;
     transform: translateY(-50%);
     font-size: 20px;
-    /* Tamanho do ícone */
     color: #888;
-    /* Cor do ícone */
     transition: color 0.3s ease-in-out;
-    /* Transição suave */
     pointer-events: none;
 }
 
 .search-bar:focus+.search-icon {
     color: #333;
-    /* Cor do ícone ao focar */
 }
 
 .add-button,
@@ -152,7 +133,6 @@ button {
     border: none;
     transition: background 0.3s;
     margin: 10px;
-    /* Adicionado */
 }
 
 .add-button:hover,
@@ -230,8 +210,6 @@ h1 {
     cursor: pointer;
     border: none;
     margin: 10px;
-    content: 'Page: ' counter(page) ' de ' counter(pages);
-    /* Adicionado */
 }
 
 .pagination button:hover {
@@ -261,13 +239,11 @@ h2 {
     border-radius: 8px;
     margin-bottom: 10px;
     transition: background 0.3s, transform 0.3s;
-    /* Adicionado */
 }
 
 .recent-file-row:hover {
     background-color: #f0f0f0;
     transform: scale(1.02);
-    /* Adicionado */
 }
 
 .recent-file-row span {
@@ -325,11 +301,10 @@ h2 {
     cursor: pointer;
     border: none;
     margin: 10px;
-    /* Adicionado */
 }
 
 .popup-content button:hover {
-    background-color: #555;
+    background-color: #555
 }
 
 .close {

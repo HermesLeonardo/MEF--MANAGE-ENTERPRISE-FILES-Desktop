@@ -35,7 +35,6 @@ function abrirPopupEditarEmpresa(empresa) {
     editarContainer.innerHTML = `
         <p><strong>Nome:</strong> ${empresa.name || "Nome não disponível"}</p>
         <p><strong>Funcionários:</strong> ${empresa.employees || 0}</p>
-        
     `;
 
 }
