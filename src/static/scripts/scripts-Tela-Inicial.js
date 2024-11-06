@@ -11,8 +11,12 @@ function irParaPerfil() {
     alert("Indo para o perfil do usuário");
 }
 
-function irParaConfiguracoes() {
-    alert("Indo para as configurações");
+function abrirPopupConfiguracoes() {
+    document.getElementById("popupConfiguracoes").style.display = "flex";
+}
+
+function fecharPopupConfiguracoes() {
+    document.getElementById("popupConfiguracoes").style.display = "none";
 }
 
 // Funções de controle do popup de adicionar empresa
@@ -37,15 +41,14 @@ function fecharPopupEditarEmpresa() {
 
 // Funções de controle do popup de excluir empresa
 function abrirPopupExcluirEmpresa(empresa) {
-    document.getElementById("empresaNomeExcluir").innerText = empresa.name || "Nome não disponível"; // Evita 'undefined'
-    document.getElementById("empresaIdExcluir").value = empresa.id || ""; // Adiciona ID para exclusão
+    document.getElementById("empresaNomeExcluir").innerText = empresa.name || "Nome não disponível";
+    document.getElementById("empresaIdExcluir").value = empresa.id || "";
     document.getElementById("popupExcluirEmpresa").style.display = "flex";
 }
 
 function fecharPopupExcluirEmpresa() {
     document.getElementById("popupExcluirEmpresa").style.display = "none";
 }
-
 // Função de pesquisa
 function pesquisarEmpresas() {
     const termoPesquisa = document.querySelector('.search-bar').value.toLowerCase();
@@ -57,6 +60,15 @@ function pesquisarEmpresas() {
     atualizarInterfaceEmpresas();
 }
 
+// Função para alternar o modo escuro
+function alternarModoEscuro() {
+    const modoEscuroAtivado = document.getElementById("modoEscuroCheckbox").checked;
+    if (modoEscuroAtivado) {
+        document.body.classList.add("modo-escuro");
+    } else {
+        document.body.classList.remove("modo-escuro");
+    }
+}
 // Array de empresas e empresas recentes
 let empresas = [];
 let todasEmpresas = [];
@@ -99,7 +111,6 @@ function atualizarInterfaceEmpresas() {
         empresasContainer.appendChild(card);
     });
 }
-
 async function adicionarNovaEmpresa() {
     const nomeEmpresa = document.getElementById("nomeEmpresa").value;
 
@@ -188,7 +199,6 @@ async function editarEmpresa() {
         alert('Por favor, preencha todos os campos.');
     }
 }
-
 function mostrarDetalhesEmpresa(empresa) {
     const detalhesContainer = document.getElementById("detalhesEmpresa");
     detalhesContainer.innerHTML = `
@@ -236,7 +246,6 @@ function atualizarEmpresasRecentes() {
         recentFilesContainer.appendChild(row);
     });
 }
-
 // Funções de navegação entre as páginas
 function proximo() {
     if (offset + limit < empresas.length) {

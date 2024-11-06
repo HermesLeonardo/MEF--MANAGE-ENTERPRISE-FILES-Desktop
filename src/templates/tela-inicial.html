@@ -22,7 +22,7 @@
                 <li onclick="irParaInicio()"><i class="fas fa-home"></i> Início</li>
                 <li onclick="irParaNotificacoes()"><i class="fas fa-bell"></i> Notificações</li>
                 <li onclick="irParaPerfil()"><i class="fas fa-user"></i> Perfil</li>
-                <li onclick="irParaConfiguracoes()"><i class="fas fa-cog"></i> Configurações</li>
+                <li onclick="abrirPopupConfiguracoes()"><i class="fas fa-cog"></i> Configurações</li>
             </ul>
         </nav>
     </div>
@@ -91,6 +91,17 @@
             <div id="detalhesEmpresa"></div>
             <button onclick="adicionarDocumento()">Adicionar Documento</button>
             <button onclick="fecharPopupDetalhes()">Fechar</button>
+        </div>
+    </div>
+
+    <div id="popupConfiguracoes" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="fecharPopupConfiguracoes()">&times;</span>
+            <h2>Configurações</h2>
+            <label>
+                <input type="checkbox" id="modoEscuroCheckbox" onclick="alternarModoEscuro()"> Modo Escuro
+            </label>
+            <button onclick="fecharPopupConfiguracoes()">Fechar</button>
         </div>
     </div>
 
