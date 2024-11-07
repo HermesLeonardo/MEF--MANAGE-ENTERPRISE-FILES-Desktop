@@ -26,7 +26,7 @@ function fecharPopupAdicionarEmpresa() {
 
 // Funções de controle do popup de editar empresa
 function abrirPopupEditarEmpresa(empresa) {
-    const editarContainer = document.getElementById("detalhesEmpresa");
+    const editarContainer = document.getElementById("popupEditarEmpresa");
     document.getElementById("popupDetalhes").style.display = "flex";
     document.getElementById("nomeEmpresaEditar").value = empresa.name || ""; // Evita 'undefined'
     document.getElementById("quantidadeFuncionariosEditar").value = empresa.employees || ""; // Evita 'undefined'

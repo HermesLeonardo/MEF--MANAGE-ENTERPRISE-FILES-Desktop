@@ -60,10 +60,6 @@ def upload_file_to_storage(source_file_name, destination_blob_name):
     except Exception as e:
         print(f"Erro ao enviar o arquivo: {str(e)}")
         return False
-    
-@app.route('/')
-def home():
-    return redirect(url_for('index'))
 
 @app.route('/cadastrar')
 def cadastrar_form():
