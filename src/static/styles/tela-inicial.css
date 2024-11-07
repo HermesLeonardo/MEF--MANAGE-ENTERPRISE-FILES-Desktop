@@ -11,6 +11,41 @@ body {
     background-color: #f4f5f7;
 }
 
+/* Modo Escuro */
+body.modo-escuro {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+body.modo-escuro .sidebar {
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+body.modo-escuro .sidebar nav ul li {
+    color: #ffffff;
+}
+
+body.modo-escuro .sidebar nav ul li:hover {
+    background-color: #333;
+}
+
+body.modo-escuro .main-content {
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+body.modo-escuro .card {
+    background-color: #333;
+    color: #ffffff;
+}
+
+body.modo-escuro .popup-content {
+    background-color: #333;
+    color: #ffffff;
+}
+
+
 /* Sidebar */
 .sidebar {
     background-color: #333;

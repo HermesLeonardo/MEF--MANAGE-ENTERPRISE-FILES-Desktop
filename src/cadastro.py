@@ -108,6 +108,23 @@ def upload():
         return "Arquivo enviado com sucesso!"
     else:
         return "Erro ao enviar o arquivo", 500
+    
+@app.route('/edit-company', methods=['POST'])
+def edit_company():
+    data = request.get_json()
+    empresa_id = data.get("id")
+    nome_empresa = data.get("name")
+    #quantidade_funcionarios = data.get("employees")
+
+    # Lógica para atualizar a empresa no banco de dados usando `empresa_id`, `nome_empresa`, e `quantidade_funcionarios`
+    
+    empresa_atualizada = {
+        "id": empresa_id,
+        "name": nome_empresa,
+        #"employees": quantidade_funcionarios
+    }
+    
+    return jsonify({"empresa": empresa_atualizada}), 200
 
 @app.route('/create-company', methods=['POST'])
 def create_company():
@@ -184,3 +201,4 @@ def criar_subdiretorio():
 
 if __name__ == '__main__':
     app.run(debug=True)
+    

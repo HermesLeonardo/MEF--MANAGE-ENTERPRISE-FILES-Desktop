@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciamento de Empresas</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/tela-inicial.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
@@ -25,7 +25,7 @@
                 <li onclick="irParaInicio()"><i class="fas fa-home"></i> Início</li>
                 <li onclick="irParaNotificacoes()"><i class="fas fa-bell"></i> Notificações</li>
                 <li onclick="irParaPerfil()"><i class="fas fa-user"></i> Perfil</li>
-                <li onclick="irParaConfiguracoes()"><i class="fas fa-cog"></i> Configurações</li>
+                <li onclick="abrirPopupConfiguracoes()"><i class="fas fa-cog"></i> Configurações</li>
             </ul>
         </nav>
     </div>
@@ -70,6 +70,7 @@
         <div class="popup-content">
             <span class="close" onclick="fecharPopupEditarEmpresa()">&times;</span>
             <h2>Editar Empresa</h2>
+            <div id="editarEmpresa"></div>
             <input type="hidden" id="empresaIdEditar">
             <input type="text" id="nomeEmpresaEditar" placeholder="Nome da Empresa" required>
             <button onclick="editarEmpresa()">Salvar Alterações</button>
@@ -98,7 +99,22 @@
         </div>
     </div>
 
-    <script src="{{ url_for('static', filename='scripts/scripts-Tela-Inicial.js') }}"></script>
+    <div id="popupConfiguracoes" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="fecharPopupConfiguracoes()">&times;</span>
+            <h2>Configurações</h2>
+            <label>
+                <input type="checkbox" id="modoEscuroCheckbox" onclick="alternarModoEscuro()"> Modo Escuro
+            </label>
+            <button onclick="fecharPopupConfiguracoes()">Fechar</button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='scripts/tela-inicial/scripts-Tela-Inicial.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/tela-inicial/excluir.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/tela-inicial/editar.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/tela-inicial/inserir.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/tela-inicial/navegacao.js') }}"></script>
 </body>
 
 </html>
