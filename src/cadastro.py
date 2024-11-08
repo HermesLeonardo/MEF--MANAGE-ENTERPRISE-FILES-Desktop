@@ -114,14 +114,12 @@ def edit_company():
     data = request.get_json()
     empresa_id = data.get("id")
     nome_empresa = data.get("name")
-    #quantidade_funcionarios = data.get("employees")
 
     # Lógica para atualizar a empresa no banco de dados usando `empresa_id`, `nome_empresa`, e `quantidade_funcionarios`
     
     empresa_atualizada = {
         "id": empresa_id,
         "name": nome_empresa,
-        #"employees": quantidade_funcionarios
     }
     
     return jsonify({"empresa": empresa_atualizada}), 200

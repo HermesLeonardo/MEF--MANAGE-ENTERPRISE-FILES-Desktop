@@ -2,7 +2,6 @@
 function abrirPopupEditarEmpresa(empresa) {
     fecharPopupDetalhes();
     document.getElementById("nomeEmpresaEditar").textContent = empresa.name || ""; // Evita 'undefined'
-    //document.getElementById("quantidadeFuncionariosEditar").value = empresa.employees || ""; // Evita 'undefined'
     document.getElementById("empresaIdEditar").value = empresa.id || ""; // Adiciona ID para edição
     document.getElementById("popupEditarEmpresa").style.display = "flex";
 }
@@ -14,7 +13,6 @@ function fecharPopupEditarEmpresa() {
 async function editarEmpresa() {
     const empresaId = document.getElementById("empresaIdEditar").value;
     const nomeEmpresa = document.getElementById("nomeEmpresaEditar").value;
-    //const quantidadeFuncionarios = document.getElementById("quantidadeFuncionariosEditar").value;
 
     if (nomeEmpresa) {
         try {

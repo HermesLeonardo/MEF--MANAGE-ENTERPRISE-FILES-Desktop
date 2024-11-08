@@ -77,18 +77,6 @@ function atualizarInterfaceEmpresas() {
         card.innerHTML = `
             <h3>${empresa.name || "Nome não disponível"}</h3>
         `;
-        const excluirButton = document.createElement("button");
-        excluirButton.className = "botao";
-        excluirButton.textContent = "Excluir";
-        excluirButton.addEventListener("click", () => abrirPopupExcluirEmpresa(empresa));
-
-        const editarButton = document.createElement("button");
-        editarButton.className = "botao";
-        editarButton.textContent = "Editar";
-        editarButton.addEventListener("click", () => abrirPopupEditarEmpresa(empresa));
-
-        card.appendChild(excluirButton);
-        card.appendChild(editarButton);
 
         empresasContainer.appendChild(card);
     });
