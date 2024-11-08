@@ -6,11 +6,11 @@ from firebase_admin import credentials, firestore, storage
 
 app = Flask(__name__)
 
-app.secret_key = "C:/UNIFIO-INTEGRADOR/pintregador/pi-6T/testeleo-593ef-firebase-adminsdk-hfnz1-bbcec932a2.json"
+app.secret_key = './key/testeleo-593ef-firebase-adminsdk-hfnz1-bbcec932a2.json'
 
 # Inicialização do Firebase
 if not firebase_admin._apps:
-    cred = credentials.Certificate("C:/UNIFIO-INTEGRADOR/pintregador/pi-6T/testeleo-593ef-firebase-adminsdk-hfnz1-bbcec932a2.json")
+    cred = credentials.Certificate('./key/testeleo-593ef-firebase-adminsdk-hfnz1-bbcec932a2.json')
     firebase_admin.initialize_app(cred, {
         'storageBucket': 'testeleo-593ef.appspot.com'  # Insira o bucket do Firebase Storage
     })

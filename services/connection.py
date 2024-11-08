@@ -18,7 +18,7 @@ firebase = pyrebase.initialize_app(cred)
 
 # Inicializando as credenciais e a aplicação Firebase
 def conexaofirebase():
-    cred = credentials.Certificate('C:/UNIFIO-INTEGRADOR/pintregador/pi-6T/testeleo-593ef-firebase-adminsdk-hfnz1-bbcec932a2.json')
+    cred = credentials.Certificate('./key/testeleo-593ef-firebase-adminsdk-hfnz1-bbcec932a2.json')
     if not firebase_admin._apps:
         firebase_admin.initialize_app(cred)
 
